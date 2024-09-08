@@ -42,3 +42,7 @@ export const changeToDate = (datetime) => {
     return parseInt(year) + '년 전'
   }
 }
+
+export const convertToM = (string) => {
+  return string.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}

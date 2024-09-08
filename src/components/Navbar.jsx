@@ -10,10 +10,11 @@ const Navbar = () => {
     }`;
 
   return (
-    <nav className="bg-white p-4 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
+    <header className=" bg-white p-4 shadow-md">
+      <nav className="max-w-5xl mx-auto">
+      <div className="mx-auto flex justify-between items-center">
         <Link to="/" className="text-gray-800 font-bold text-xl hover:text-orange-500 transition-colors duration-200">
-          당근마켓
+          한양 마켓
         </Link>
         <div className="flex items-center space-x-4">
           {currentUser ? (
@@ -53,8 +54,9 @@ const Navbar = () => {
             </>
           )}
         </div>
-      </div>
-    </nav>
+        </div>
+        </nav>
+    </header>
   );
 };
 
