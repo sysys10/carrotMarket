@@ -28,15 +28,16 @@ const Chat = () => {
 
     return () => unsubscribe();
   }, [currentUser]);
+  console.log(chatRooms)
   return (
     <div className="flex ">
       <ChatSidebar chatRooms={chatRooms} />
       <div className=" flex-grow p-5">
         <h2 className="text-2xl font-bold mb-4">채팅</h2>
         {chatRooms.map((room) => (
-          <div
+          <Link
             key={room.id}
-
+            to={`${room.id}`}
             className="block bg-white rounded-lg shadow-md p-4 mb-4 hover:shadow-lg transition duration-300"
           >
             <h3 className="font-semibold">{room.productName}</h3>
@@ -44,7 +45,7 @@ const Chat = () => {
             <p className="text-sm text-gray-500 mt-2">
               {new Date(room.lastMessageTime.toDate()).toLocaleString()}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
