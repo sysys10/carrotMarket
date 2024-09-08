@@ -36,6 +36,8 @@ const AddProduct = () => {
         imageUrl,
         sellerId: currentUser.uid,
         sellerName: currentUser.displayName,
+        interest: 0,
+        chatCnt: 0,
         createdAt: new Date()
       });
 

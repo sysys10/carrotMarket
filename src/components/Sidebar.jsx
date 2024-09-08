@@ -1,4 +1,3 @@
-import { BiUser } from "react-icons/bi"
 import { changeToDate } from "../utils/functions"
 import UserIcons from "./UserIcon"
 
