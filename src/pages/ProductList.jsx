@@ -20,7 +20,7 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div className='max-w-5xl mx-auto'>
+    <div className='max-w-5xl mx-auto pt-20'>
       <h2 className="text-2xl font-bold mb-4">상품 목록</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map(product => (
