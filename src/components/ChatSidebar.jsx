@@ -4,7 +4,7 @@ import UserIcons from "./UserIcon";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
-const ChatSidebar = ({ chatRooms, onSelectRoom, selectedRoomId }) => {
+const ChatSidebar = ({ chatRooms, selectedRoomId }) => {
   const currentUser = useAuth();
   return (
     <aside className="w-80 h-full bg-white overflow-y-auto border-r">

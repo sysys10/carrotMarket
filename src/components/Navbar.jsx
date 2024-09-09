@@ -3,8 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { MdMenu } from "react-icons/md";
 import SideMenu from "./SideMenu";
-import { FaCarrot } from "react-icons/fa";
-
+import dangen from "/dangen.svg"
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +26,7 @@ const Navbar = () => {
               to="/"
               className="text-gray-800 flex items-center font-bold text-xl hover:text-orange-500 transition-colors duration-200"
             >
-              한양마켓 <FaCarrot className="ml-2 text-2xl text-orange-500"/>
+              <p>한양마켓</p> <img src={dangen} width={'28px'} className="ml-1"/>
             </Link>
             <div className="md:hidden">
               <button onClick={toggleMenu} className="text-gray-800">
@@ -53,7 +52,7 @@ const Navbar = () => {
                   )}
                   <button
                     onClick={logout}
-                    className="text-gray-800 hover:text-orange-500 transition-colors duration-200 ml-2"
+                    className={navLinkStyles}
                   >
                     로그아웃
                   </button>
