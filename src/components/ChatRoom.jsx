@@ -72,7 +72,7 @@ const ChatRoom = ({ roomId }) => {
   }
 
   return (
-    <div className="flex flex-col h-[95vh]">
+    <div className="flex flex-col h-[calc(100vh-60px)]">
       <div className="bg-white shadow-md p-4">
         <Link to={`/products/${chatRoomData.productId}`} className="text-xl font-bold">{chatRoomData.productName}</Link>
         <p className="text-sm text-gray-500">{chatRoomData.productLocation}</p>

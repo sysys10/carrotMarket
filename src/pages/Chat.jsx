@@ -30,7 +30,7 @@ const Chat = () => {
   }, [currentUser, roomId]);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[calc(100vh-60px)] bg-gray-100">
       <ChatSidebar 
         chatRooms={chatRooms} 
         onSelectRoom={setSelectedRoom} 

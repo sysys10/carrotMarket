@@ -19,7 +19,7 @@ function App() {
       
       <ScrollToTop/>
       <AuthProvider>
-        <div className="flex flex-col bg-gray-100">
+        <div className="flex flex-col">
           <Navbar />
           <main className="flex-grow min-h-screen">
             <Routes>
