@@ -141,7 +141,8 @@ const ProductDetail = () => {
           </p>
         </div>
         <div className="flex justify-between items-center">
-          {currentUser && currentUser.uid !== product.sellerId ? (
+          {currentUser ? (
+            currentUser.uid !== product.sellerId ? (
             <button
               onClick={handleChatClick}
               className="bg-orange-500 text-white px-4 py-2 rounded-full inline-block hover:bg-orange-600 transition duration-300"
@@ -155,7 +156,7 @@ const ProductDetail = () => {
             >
               수정하기
             </button>
-          )}
+          )):<div></div>}
           <button
             onClick={handleInterestToggle}
             className={`flex items-center ${
