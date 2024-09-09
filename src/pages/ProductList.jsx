@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { convertToM } from "../utils/functions";
-import { fetchProducts } from "../services/product";
+import { fetchProducts } from "../services/productService";
 import { BiPlus } from "react-icons/bi";
 import AddProductModal from "../components/AddProductModal";
 import Modal from 'react-modal';

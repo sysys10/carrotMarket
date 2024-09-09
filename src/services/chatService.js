@@ -10,9 +10,10 @@ import {
   onSnapshot,
   serverTimestamp,
   getDocs,
+  arrayUnion,
 } from "firebase/firestore";
 import { db } from "./firebaseService";
-import { addChat } from "./product";
+import { addChat } from "./productService";
 export const createChatRoom = async (product, buyer, seller) => {
   try {
     // 먼저 이미 존재하는 채팅방이 있는지 확인
@@ -29,17 +30,16 @@ export const createChatRoom = async (product, buyer, seller) => {
     if (!querySnapshot.empty) {
       return querySnapshot.docs[0].id;
     }
-
     // 존재하지 않는다면 새로운 채팅방 생성
     const data = {
       buyerName: buyer.displayName,
-      sellerName: seller.sellerName,
+      sellerName: seller.name,
       productId: product.id,
       productName: product.name,
       productLocation: product.location,
       lastMessage: "",
       lastMessageTime: serverTimestamp(),
-      participants: [buyer.uid, seller.sellerId],
+      participants: arrayUnion(buyer.uid, seller.sellerId),
       createdAt: serverTimestamp(),
     };
     await addChat(product.id);

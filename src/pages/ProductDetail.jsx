@@ -11,14 +11,17 @@ import {
   fetchProduct,
   removeInterest,
   fetchLatestProducts,
-} from "../services/product.js";
+  updateProduct,
+} from "../services/productService.js";
 import { ProductGrid } from "./ProductList.jsx";
+import EditProductModal from "../components/EditProductModal.jsx";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [latestProducts, setLatestProducts] = useState([]);
   const [isInterested, setIsInterested] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -42,6 +45,21 @@ const ProductDetail = () => {
   if (!product) {
     return <div>로딩중...</div>;
   }
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditProduct = async (updatedProduct) => {
+    try {
+      await updateProduct(product.id, updatedProduct);
+      setProduct({ ...product, ...updatedProduct });
+      setIsEditModalOpen(false);
+      alert("상품 정보가 성공적으로 수정되었습니다.");
+    } catch (error) {
+      console.error("Error updating product:", error);
+      alert("상품 정보 수정에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   const handleChatClick = async () => {
     if (!currentUser) {
@@ -131,7 +149,10 @@ const ProductDetail = () => {
               채팅으로 거래하기
             </button>
           ) : (
-            <button className="bg-orange-500 text-white px-4 py-2 rounded-full inline-block hover:bg-orange-600 transition duration-300">
+            <button
+              onClick={handleEditClick}
+              className="bg-orange-500 text-white px-4 py-2 rounded-full inline-block hover:bg-orange-600 transition duration-300"
+            >
               수정하기
             </button>
           )}
@@ -155,6 +176,12 @@ const ProductDetail = () => {
       <Link to={"/products"} className="text-base text-blue-600 text-center">
         <div>상품 더 보기</div>
       </Link>
+      <EditProductModal
+        isOpen={isEditModalOpen}
+        onRequestClose={() => setIsEditModalOpen(false)}
+        onEditProduct={handleEditProduct}
+        product={product}
+      />
     </div>
   );
 };

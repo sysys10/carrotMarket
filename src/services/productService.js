@@ -86,3 +86,13 @@ export const removeInterest = async (productId, currentUser) => {
     console.error("관심 제거 중 에러: ", error);
   }
 };
+export const updateProduct = async (productId, updatedData) => {
+  const docRef = doc(db, "products", productId);
+  try {
+    await updateDoc(docRef, updatedData);
+    console.log("상품 정보 업데이트 완료");
+  } catch (error) {
+    console.error("상품 정보 업데이트 중 에러: ", error);
+    throw error;
+  }
+};
