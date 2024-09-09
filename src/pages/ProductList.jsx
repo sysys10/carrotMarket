@@ -5,6 +5,7 @@ import { fetchProducts } from "../services/product";
 import { BiPlus } from "react-icons/bi";
 import AddProductModal from "../components/AddProductModal";
 import Modal from 'react-modal';
+import Banner from "../components/Banner";
 
 Modal.setAppElement('#root');
 
@@ -25,10 +26,10 @@ export const ProductGrid = ({ products }) => {
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
             <p className="text-gray-600">{convertToM(product.price)}원</p>
-            <p className="text-sm text-gray-500 mt-2">{product.location}</p>
+            <p className="text-sm text-gray-500 mb-2">{product.location}</p>
             <div className="flex">
               <div className="text-xs">
-                관심 {product.interest} * 채팅 {product.chatcnt}
+                관심 {product.interest} ・ 채팅 {product.chatcnt}
               </div>
             </div>
           </div>
@@ -59,9 +60,7 @@ const ProductList = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full h-80 bg-yellow-100">
-        <div className="max-w-4xl mx-auto">배너입니다.</div>
-      </div>
+     <Banner/>
       <div className="max-w-3xl mx-auto relative">
         <button
           onClick={openModal}

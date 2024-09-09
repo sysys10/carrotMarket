@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,18 +9,19 @@ export default defineConfig({
     include: /src\/.*\.jsx?$/,
     // loader: "tsx",
     // include: /src\/.*\.[tj]sx?$/,
-  }, resolve: {
+  },
+  resolve: {
     alias: {
-      // 클라이언트에서 사용하지 않을 모듈에 대한 별칭 설정
-      express: 'path-to-empty-module',
+      "@": "/src",
+      "@assets": "/src/assets",
     },
   },
   optimizeDeps: {
-    exclude: ['express'], // express를 디펜던시 최적화에서 제외
     esbuildOptions: {
       loader: {
-        '.js': 'jsx',
+        ".js": "jsx",
       },
     },
   },
-})
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg']
+});
