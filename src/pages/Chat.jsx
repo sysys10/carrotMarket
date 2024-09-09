@@ -1,52 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { db } from "../services/firebaseService";
-import ChatSidebar from "../components/Sidebar";
+import { getChatRooms } from "../services/chatService";
+import ChatSidebar from "../components/ChatSidebar";
+import ChatRoom from "../components/ChatRoom";
 
 const Chat = () => {
   const [chatRooms, setChatRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const { currentUser } = useAuth();
+  const { roomId } = useParams();  // URL에서 roomId 파라미터를 가져옵니다.
 
   useEffect(() => {
     if (!currentUser) return;
 
-    const q = query(
-      collection(db, "chatRooms"),
-      where("participants", "array-contains", currentUser.uid)
-    );
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const rooms = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setChatRooms(rooms);
-      console.log(chatRooms)
+    const unsubscribe = getChatRooms(currentUser.uid, (updatedChatRooms) => {
+      setChatRooms(updatedChatRooms);
+      
+      // URL에 roomId가 있으면 해당 채팅방을 선택합니다.
+      if (roomId) {
+        const room = updatedChatRooms.find(room => room.id === roomId);
+        if (room) {
+          setSelectedRoom(room);
+        }
+      }
     });
 
     return () => unsubscribe();
-  }, [currentUser]);
-  console.log(chatRooms)
+  }, [currentUser, roomId]);
+
   return (
-    <div className="flex ">
-      <ChatSidebar chatRooms={chatRooms} />
-      <div className=" flex-grow p-5">
-        <h2 className="text-2xl font-bold mb-4">채팅</h2>
-        {chatRooms.map((room) => (
-          <Link
-            key={room.id}
-            to={`${room.id}`}
-            className="block bg-white rounded-lg shadow-md p-4 mb-4 hover:shadow-lg transition duration-300"
-          >
-            <h3 className="font-semibold">{room.productName}</h3>
-            <p className="text-gray-600">{room.lastMessage}</p>
-            <p className="text-sm text-gray-500 mt-2">
-              {new Date(room.lastMessageTime.toDate()).toLocaleString()}
-            </p>
-          </Link>
-        ))}
+    <div className="flex h-screen">
+      <ChatSidebar 
+        chatRooms={chatRooms} 
+        onSelectRoom={setSelectedRoom} 
+        selectedRoomId={selectedRoom?.id}
+      />
+      <div className="flex-grow">
+        {selectedRoom ? (
+          <ChatRoom roomId={selectedRoom.id} />
+        ) : (
+          <div className="h-full flex items-center justify-center text-gray-500">
+            채팅방을 선택해주세요.
+          </div>
+        )}
       </div>
     </div>
   );

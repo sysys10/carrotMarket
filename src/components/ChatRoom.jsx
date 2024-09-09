@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getChatMessages, sendMessage, getChatRoomData } from '../services/chatService';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
 
-const ChatRoom = () => {
-  const { roomId } = useParams();
+const ChatRoom = ({ roomId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [chatRoomData, setChatRoomData] = useState(null);
   const [error, setError] = useState(null);
   const { currentUser } = useAuth();
   const messagesEndRef = useRef(null);
-  const navigate = useNavigate();
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     if (!roomId || !currentUser) return;
@@ -38,8 +37,18 @@ const ChatRoom = () => {
   }, [roomId, currentUser]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollToBottom();
   }, [messages]);
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      const { scrollHeight, clientHeight } = chatContainerRef.current;
+      chatContainerRef.current.scrollTo({
+        top: scrollHeight - clientHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,27 +64,20 @@ const ChatRoom = () => {
   };
 
   if (error) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4">
-        <p className="text-red-500">{error}</p>
-        <button 
-          onClick={() => navigate('/chat')} 
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-        >
-          채팅 목록으로 돌아가기
-        </button>
-      </div>
-    );
+    return <div className="p-4 text-red-500">{error}</div>;
   }
 
   if (!chatRoomData) {
-    return <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4">로딩 중...</div>;
+    return <div className="p-4">로딩 중...</div>;
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4">
-      <h2 className="text-xl font-bold mb-4">{chatRoomData.productName}</h2>
-      <div className="h-96 overflow-y-auto mb-4">
+    <div className="flex flex-col h-[95vh]">
+      <div className="bg-white shadow-md p-4">
+        <Link to={`/products/${chatRoomData.productId}`} className="text-xl font-bold">{chatRoomData.productName}</Link>
+        <p className="text-sm text-gray-500">{chatRoomData.productLocation}</p>
+      </div>
+      <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-4">
         {messages.map(msg => (
           <div
             key={msg.id}
@@ -91,20 +93,22 @@ const ChatRoom = () => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <form onSubmit={handleSubmit} className="flex">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className="flex-grow mr-2 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="메시지를 입력하세요..."
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-        >
-          전송
-        </button>
+      <form onSubmit={handleSubmit} className="bg-white p-4 border-t">
+        <div className="flex">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className="flex-grow mr-2 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="메시지를 입력하세요..."
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+          >
+            전송
+          </button>
+        </div>
       </form>
     </div>
   );
