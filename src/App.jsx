@@ -11,6 +11,7 @@ import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
 import Footer from "./components/Footer";
 import ScrollToTop from "./utils/scrollTop";
+import NearbyStores from "./pages/NearbyStores";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/nearby-stores" element={<NearbyStores/>} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/add-product" element={<AddProduct />} />
