@@ -1,4 +1,3 @@
-import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import UserIcons from "./UserIcon";
@@ -8,8 +7,8 @@ import { Link } from "react-router-dom";
 const ChatSidebar = ({ chatRooms, onSelectRoom, selectedRoomId }) => {
   const currentUser = useAuth();
   return (
-    <aside className="w-80 h-full bg-gray-100 overflow-y-auto border-r">
-      {chatRooms.map((room, index) => (
+    <aside className="w-80 h-full bg-white overflow-y-auto border-r">
+      {chatRooms.map((room) => (
         <div key={room.id} className="border-b border-gray-200 last:border-b-0">
           <Link
             className={`flex p-4 cursor-pointer hover:bg-gray-200 ${
