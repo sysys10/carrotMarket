@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { MdMenu } from "react-icons/md";
 import SideMenu from "./SideMenu";
-import dangen from "/dangen.svg"
+import dangen from "/dangen.svg";
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,8 @@ const Navbar = () => {
               to="/"
               className="text-gray-800 flex items-center font-bold text-xl hover:text-orange-500 transition-colors duration-200"
             >
-              <p>한양마켓</p> <img src={dangen} width={'28px'} className="ml-1"/>
+              <p>한양마켓</p>{" "}
+              <img src={dangen} width={"28px"} className="ml-1" />
             </Link>
             <div className="md:hidden">
               <button onClick={toggleMenu} className="text-gray-800">
@@ -39,8 +40,8 @@ const Navbar = () => {
                   <NavLink to="/products" className={navLinkStyles}>
                     중고거래
                   </NavLink>
-                  <NavLink to="/nearby-stores" className={navLinkStyles}>
-                    동네업체
+                  <NavLink to="/about" className={navLinkStyles}>
+                    스터디 소개
                   </NavLink>
                   <NavLink to="/chat" className={navLinkStyles}>
                     채팅
@@ -50,10 +51,7 @@ const Navbar = () => {
                       관리자
                     </NavLink>
                   )}
-                  <button
-                    onClick={logout}
-                    className={navLinkStyles}
-                  >
+                  <button onClick={logout} className={navLinkStyles}>
                     로그아웃
                   </button>
                 </>
@@ -62,8 +60,8 @@ const Navbar = () => {
                   <NavLink to="/products" className={navLinkStyles}>
                     중고거래
                   </NavLink>
-                  <NavLink to="/nearby-stores" className={navLinkStyles}>
-                    동네업체
+                  <NavLink to="/about" className={navLinkStyles}>
+                    스터디 소개
                   </NavLink>
                   <NavLink to="/login" className={navLinkStyles}>
                     로그인
@@ -74,7 +72,12 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
-      <SideMenu isOpen={isOpen} toggleMenu={toggleMenu} currentUser={currentUser} logout={logout} />
+      <SideMenu
+        isOpen={isOpen}
+        toggleMenu={toggleMenu}
+        currentUser={currentUser}
+        logout={logout}
+      />
     </>
   );
 };

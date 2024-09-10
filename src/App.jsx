@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -11,21 +10,20 @@ import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
 import Footer from "./components/Footer";
 import ScrollToTop from "./utils/scrollTop";
-import NearbyStores from "./pages/NearbyStores";
-
+import About from "./pages/About";
+import './App.css'
 function App() {
   return (
     <BrowserRouter>
-      
       <ScrollToTop/>
       <AuthProvider>
-        <div className="flex flex-col">
+        <div className="flex flex-col font-pretendard">
           <Navbar />
           <main className="flex-grow min-h-screen">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/nearby-stores" element={<NearbyStores/>} />
+              <Route path="/about" element={<About/>} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/add-product" element={<AddProduct />} />

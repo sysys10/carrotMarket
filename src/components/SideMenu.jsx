@@ -22,13 +22,17 @@ const SideMenu = ({ isOpen, toggleMenu, currentUser, logout }) => {
       <nav className="mt-4">
         {currentUser ? (
           <>
-            <NavLink to="/products" className={navLinkStyles} onClick={toggleMenu}>
+            <NavLink
+              to="/products"
+              className={navLinkStyles}
+              onClick={toggleMenu}
+            >
               중고거래
             </NavLink>
-            <NavLink to="/nearby-stores" className={navLinkStyles} onClick={toggleMenu}>
-              동네업체
+            <NavLink to="/about" className={navLinkStyles} onClick={toggleMenu}>
+              스터디 소개
             </NavLink>
-          
+
             <NavLink to="/chat" className={navLinkStyles} onClick={toggleMenu}>
               채팅
             </NavLink>
@@ -44,11 +48,15 @@ const SideMenu = ({ isOpen, toggleMenu, currentUser, logout }) => {
           </>
         ) : (
           <>
-            <NavLink to="/products" className={navLinkStyles} onClick={toggleMenu}>
+            <NavLink
+              to="/products"
+              className={navLinkStyles}
+              onClick={toggleMenu}
+            >
               중고거래
             </NavLink>
-            <NavLink to="/nearby-stores" className={navLinkStyles} onClick={toggleMenu}>
-              동네업체
+            <NavLink to="/about" className={navLinkStyles} onClick={toggleMenu}>
+              스터디 소개
             </NavLink>
             <NavLink to="/login" className={navLinkStyles} onClick={toggleMenu}>
               로그인
